@@ -163,7 +163,7 @@ function Register() {
             </div>
           )}
 
-          {/* ŞİFRE */}
+        
           <div className="flex flex-col gap-1">
             <div className="relative w-full">
               <input
