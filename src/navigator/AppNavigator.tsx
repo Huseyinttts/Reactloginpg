@@ -3,7 +3,10 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import Home from "../screens/Home";
+import MainLayout from "../components/MainLayout";
+import TodoList from "../screens/TodoList";
+import AddTodo from "../screens/AddTodo";
+import Settings from "../screens/Settings";
 
 export default function AppNavigator() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -12,7 +15,16 @@ export default function AppNavigator() {
     <Routes>
       <Route path="/" element={!user ? <Login /> : <Navigate to="/home" />} />
       <Route path="/register" element={!user ? <Register /> : <Navigate to="/home" />} />
-      <Route path="/home" element={user ? <Home /> : <Navigate to="/" />} />
+      
+      {user && (
+        <Route path="/home" element={<MainLayout />}>
+          <Route index element={<TodoList />} />
+          <Route path="add" element={<AddTodo />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      )}
+      
+      <Route path="*" element={<Navigate to={user ? "/home" : "/"} />} />
     </Routes>
   );
 }
